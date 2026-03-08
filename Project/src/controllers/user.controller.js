@@ -283,7 +283,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
           subscribedToCount: {
             $size: "$SubscribedTo",
           },
-  
+
           isSubscribed: {
             $cond: {
               if: { $in: [req.user?._id, "$Subscribers.subscriber"] },
@@ -294,28 +294,27 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
         },
       },
       {
-        $project:{
-          fullName:1,
-          userName:1,
-          subscribersCount:1,
-          subscribedToCount:1,
-          isSubscribed:1,
-          avatar:1,
-          coverImage:1,
-          email:1
-        }
-      }
+        $project: {
+          fullName: 1,
+          userName: 1,
+          subscribersCount: 1,
+          subscribedToCount: 1,
+          isSubscribed: 1,
+          avatar: 1,
+          coverImage: 1,
+          email: 1,
+        },
+      },
     ]);
-    if(!channel?.length){
-      throw new ApiError(404 , "channel not found")
+    if (!channel?.length) {
+      throw new ApiError(404, "channel not found");
     }
     return res
       .status(200)
       .json(new ApiResponse(200, channel[0], "get channel successfully"));
   } catch (error) {
-    throw new ApiError(401, error?.message || "something went wrong")
+    throw new ApiError(401, error?.message || "something went wrong");
   }
-
 });
 
 export {
@@ -328,5 +327,5 @@ export {
   updateAccountDetails,
   updateAvatar,
   updateCoverImage,
-  getUserChannelProfile
+  getUserChannelProfile,
 };
